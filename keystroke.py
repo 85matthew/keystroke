@@ -305,7 +305,7 @@ def insertDB(appStartedTimestamp, incomingTimestamp, duration, activeAppName, la
         #     'queryValues')
         #)
        # SQLfields = '"StartTimeStamp", "EndTimeStamp", "Duration", "AppName", "UserID", "UserType", tenant, url, domain, "keywordsSearched"'
-        #query = 'INSERT into "EventsTable" ("StartTimeStamp", "EndTimeStamp", "Duration","AppName", "UserID", "UserType",\
+        #query = 'INSERT into "events" ("StartTimeStamp", "EndTimeStamp", "Duration","AppName", "UserID", "UserType",\
         #         "Tenant", "Url", "Domain", "KeywordsSearched") VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
         
 
@@ -315,8 +315,9 @@ def insertDB(appStartedTimestamp, incomingTimestamp, duration, activeAppName, la
         #cur.executemany(query, data)
 
         try:
-            cur.execute('INSERT INTO "EventsTable" ("StartTimeStamp", "EndTimeStamp", "Duration","AppName", "UserID", "UserType", "Tenant", "Url", "Domain", "KeywordsSearched") VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', (appStartedTimestamp, incomingTimestamp, duration, lastAppName, userid, userType, tenant, lastUrl, lastDomain, lastQueryValue))
+            cur.execute('INSERT INTO "events" ("start_time_stamp", "end_time_stamp", "duration","app_name", "user_id", "user_type", "tenant", "url", "domain", "search_words") VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', (appStartedTimestamp, incomingTimestamp, duration, lastAppName, userid, userType, tenant, lastUrl, lastDomain, lastQueryValue))
             conn.commit()
+            print "********* SUCCESSFULLY WROTE TO DB *********"
         except psycopg2.DatabaseError, e:
             
             if conn:
